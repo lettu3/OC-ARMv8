@@ -1,4 +1,4 @@
-	.include "loss.s"
+	.include "draw.s"
 	.equ SCREEN_WIDTH,   640
 	.equ SCREEN_HEIGH,   480
 	.equ BITS_PER_PIXEL, 32
@@ -14,8 +14,23 @@ main:
 	mov x20, x0 // Guarda la dirección base del framebuffer en x20
 
 
-	movz x10, 0x00, lsl 16
-	movk x10, 0x9846, lsl 00 //color del pasto en x10
+    movz x10, 0x75, lsl 16
+	movk x10, 0xaadb, lsl 00 //color del fondo
+	bl background
+	
+
+	bl floor
+
+
+	movz x10, 0xff, lsl 16
+	movk x10, 0xffff, lsl 00
+	mov x1, 100
+	mov x3, SCREEN_WIDTH
+		lsr x3, x3, 1
+	mov x4, SCREEN_HEIGH
+		lsr x4, x4, 1
+	bl triangulo
+
 
 
 
@@ -46,18 +61,6 @@ userInput:
 
 	//---------------------------------------------------------------
 	// Infinite Loop
-
-	BL background
-	
-	bl cruz
-
-	bl first_vignette
-	
-	bl second_vignette
-	
-	bl third_vignette
-
-	bl last_vignette
 
 
 InfLoop:

@@ -1,0 +1,69 @@
+cactus:
+
+sub sp, sp, 8
+stur x30, [sp, 0]
+
+//TRONCO DEL CACTUS
+    movz x10, 0x27, lsl 16
+	movk x10, 0x4739, lsl 00
+    mov x1, 40        //ANCHO
+    mov x2, 160       //ALTO
+
+    mov x3, SCREEN_WIDTH
+        lsr x3, x3, 1
+    mov x4, SCREEN_HEIGH  //COORDS INICIO
+        lsr x4, x4, 1
+
+bl rectangle
+//BRAZO IZQUIERDO DEL CACTUS    
+    mov x1, 100     //ANCHO
+    mov x2, 20      //ALTO
+
+    mov x3, SCREEN_WIDTH
+        lsr x3, x3, 1
+    mov x4, SCREEN_HEIGH   //COORDS INICIO
+        lsr x4, x4, 1
+        add x4, x4, 80
+
+
+
+bl rectangle                    
+    
+    mov x1, 30      //ANCHO
+    mov x2, 90      //ALTO
+
+    mov x3, SCREEN_WIDTH
+        lsr x3, x3, 1
+        add x3, x3, 70
+    mov x4, SCREEN_HEIGH   //COORDS INICIO
+        lsr x4, x4, 1
+        add x4, x4, 10
+
+bl rectangle
+
+//BRAZO DERECHO CACTUS
+
+    mov x1, 50 //ANCHO
+    mov x2, 20 //ALTO
+
+    mov x3, SCREEN_WIDTH    
+        lsr x3, x3, 1
+        sub x3, x3, 50
+    mov x4, SCREEN_HEIGH   //COORDS INICIO
+        lsr x4, x4, 1
+        add x4, x4, 90      // 
+
+bl rectangle
+
+    mov x1,
+    mov x2,
+
+    mov x3
+    mov x4
+
+bl rectangle
+
+ldr x30, [sp, 0]
+add sp, sp, 8
+
+ret
