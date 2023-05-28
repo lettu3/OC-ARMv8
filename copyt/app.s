@@ -1,3 +1,4 @@
+	.include "loss.s"
 	.equ SCREEN_WIDTH,   640
 	.equ SCREEN_HEIGH,   480
 	.equ BITS_PER_PIXEL, 32
@@ -15,54 +16,6 @@ main:
 
 	movz x10, 0x00, lsl 16
 	movk x10, 0x9846, lsl 00 //color del pasto en x10
-
-    mov x2, SCREEN_HEIGH         // x2 = Y Size
-
-loop1:
-	mov x1, SCREEN_WIDTH         // X Size
-	
-printGround:
-	stur w10,[x0]  // Colorear el pixel N
-	add x0,x0,4    // Siguiente pixel
-	sub x1,x1,1    // Decrementar contador X
-	cbnz x1,printGround  // Si no terminó la fila, salto
-	sub x2,x2,1    // Decrementar contador Y
-	cbnz x2,loop1  // Si no es la última fila, salto
-
-sky:
-	mov x0, x20      //restauro la direccion base del framebuffer...
-	movz x10, 0x75, lsl 16
-	movk x10, 0xaadb, lsl 00 //color del cielo en x10
-
-	mov x2, SCREEN_HEIGH         // x2 = Y Size
-	lsr x2, x2, 1 				 // x2 = (Y Size / 2)
-
-	//me gustaria que el cielo sea 1/4 mas grande que el suelo
-	mov x9, x2					// guardo en x9 mi Ysz/2
-	lsr x2, x2, 1				// x2 = Ysz/4
-	add x2, x2, x9				// x2 = Ysz/2 + Ysz/4
-
-loop2:
-	mov x1, SCREEN_WIDTH
-
-printSky:
-	stur w10,[x0]  // Colorear el pixel N
-	add x0,x0,4    // Siguiente pixel
-	sub x1,x1,1    // Decrementar contador X
-	cbnz x1,printSky  // Si no terminó la fila, salto
-	sub x2,x2,1    // Decrementar contador Y
-	cbnz x2,loop2  // Si no es la última fila, salto
-
-Sun:
-	mov x0, x20 // restauro la direccion base del framebuffer...
-	movz x10, 0xfc, lsl 16
-	movk x10, 0xbf49, lsl 00 //color del sol en x10
-
-	mov x2, SCREEN_HEIGH  // en este caso, N Size 
-	lsr x2, x2, 2         // N Size := N Size / 4
-	mov x3, x2
-	lsr x3, x3, 1       // en x3 voy a guardar el radio de mi circulo
-
 
 
 
@@ -93,6 +46,18 @@ userInput:
 
 	//---------------------------------------------------------------
 	// Infinite Loop
+
+	BL background
+	
+	bl cruz
+
+	bl first_vignette
+	
+	bl second_vignette
+	
+	bl third_vignette
+
+	bl last_vignette
 
 
 InfLoop:
