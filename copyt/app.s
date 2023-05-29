@@ -22,14 +22,19 @@ main:
 	bl floor
 
 
-	movz x10, 0xff, lsl 16
-	movk x10, 0xffff, lsl 00
-	mov x1, 100
+
+	/* movz x10, 0x73, lsl 16
+	movk x10, 0x4222, lsl 00
+	mov x1, 120
 	mov x3, SCREEN_WIDTH
 		lsr x3, x3, 1
 	mov x4, SCREEN_HEIGH
 		lsr x4, x4, 1
-	bl triangulo
+	bl triangle
+	*/
+	mov x3, SCREEN_WIDTH
+		lsr x3, x3, 1
+	bl cactus
 
 
 
