@@ -26,17 +26,18 @@ main:
 	bl astro
 
 
-	/* movz x10, 0x73, lsl 16
-	movk x10, 0x4222, lsl 00
-	mov x1, 120
-	mov x3, SCREEN_WIDTH
-		lsr x3, x3, 1
-	mov x4, SCREEN_HEIGH
-		lsr x4, x4, 1
-	bl triangle
-	*/
+		movz x10, 0x73, lsl 16
+		movk x10, 0x4222, lsl 00
+		mov x1, 120
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+	bl triangle
+
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			add x3, x3, 150
 	bl cactus
 
 		mov x3, SCREEN_WIDTH
