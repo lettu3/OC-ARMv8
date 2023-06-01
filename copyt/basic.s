@@ -7,6 +7,9 @@
 calcular_pixel:
     //params: x3 = x coord,   x4 = y coord
 
+	//QUE PASA SI (X3>640 o X3 < 0) O (X4 > 480 o X4 < 0)????
+	//NECESARIO PARA EJERCICIO 2 ARREGLAR ESTO 
+
 	mov x0, 640							// x0 = 640.
 	mul x0, x0, x4						// x0 = 640 * y.		
 	add x0, x0, x3						// x0 = (640 * y) + x.
@@ -14,6 +17,24 @@ calcular_pixel:
 	add x0, x0, x20						// x0 = ((640 * y) + x) * 4 + framebuffer[0]
 ret							
 //--FIN DE CALCULAR PIXEL--//
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO PINTAR PIXEL--//
+
+paint_pixel:
+//params x3 = x coord, x4 = y coord  w10 = colour
+sub SP, SP, 8 						
+stur X30, [SP, 0]		
+
+	bl calcular_pixel
+	stur w10, [x0]
+
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+
+//--FIN DE PINTAR PIXEL--//
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,36 +71,125 @@ ret
 triangle:
 //parametros: x1 = TAmaño del triangulo, x3 y x4 = coordenadas (x, y) del vertice superior del triangulo
 //            w10 = color del triangulo
+sub SP, SP, 8 						
+stur X30, [SP, 0]
 
-    sub sp, sp, 8
-    stur x30, [sp, 0]
+	mov x9, x1
+	mov x13, x3
+	triangleLoop:
+		mov x3, x13				//guardo en x13 la coordenada x del primer pixel de la fila
+		mov x11, x1
+			add x11, x11, 1
+		sub x11, x11, x9
 
-    bl calcular_pixel
-
-    ldr x30, [sp, 0]
-    add sp, sp, 8
-
-    mov x13, x0          //x13 = pixel de inicio           
-    mov x9, x1          //x9 = altura del triangulo, lo uso como contador
-
-    triangleLoop:
-        mov x12, x13                //me traigo a x12 el primer pixel de la fila
-        mov x11, x1                 //me traigo a x11 el ancho maximo de fila
-        add x11, x11, 1             //le sumo 1
-        sub x11, x11, x9            //le resto la altura parcial, de esta manera con cada iteracion del loop, x11 va a ser cada vez mas grande
-
-        printTriangle:
-            stur w10, [x13]         //pinto el pixel
-            add x13, x13, 4         //apunto al siguiente
-            sub x11, x11, 1         // resto el contador de ancho de fila
-            cbnz x11, printTriangle //si no llegue al final, vuelvo y pinto el siguiente pixel
-            mov x13, x12            //si llegue al final de la fila, me vuelvo a parar en el primer pixel de esta
-            add x13, x13, 2559      //hago un salto de linea, pero un pixel atras
-            sub x9, x9, 1           //resto el contador de altura
-            cbnz x9, triangleLoop   //si no es la ultima fila, repito
-
+		printTriangle:
+			bl paint_pixel
+			add x3, x3, 1			//sumo 1 a la coord x
+			sub x11, x11, 1			//resto el contador de largo de fila
+			cbnz x11, printTriangle // si no llegue al final de la fila, pinto otro pixel
+			sub x13, x13, 1         // le resto 1 a la coordenada x del primer pixel de la fila almacenada en x13
+			add x4, x4, 1			//sumo 1 a la coord y
+			sub x9, x9, 1           //resto el contador de altura
+			cbnz x9, triangleLoop // si no llegue a la ultima fila, repito
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
 ret
 //--FIN DEL TRIANGULO--//
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//--INICIO CIRCUNFERENCIA--//
+//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//
+circunference:
+//parametros: x3 = coordenada x del centro, x4 = coordenada y del centro, x5 = radio,  w10 = color
+sub sp, sp, 8
+stur x30, [sp, 0]
+
+mov x23, x3
+mov x24, x4     //me guardo en x23 y x24 las coordenadas del centro para poder restaurarlas
+
+mov x13, xzr			//x13 va a representar mi offset de x, inicialmente 0
+mov x14, x5				//x14 va a representar mi offset de y, inicialmente r
+mov x15, 1				//x15 va a representar el error
+	sub x15, x15, x5
+
+circunference_loop:  //while ....
+	mov x3, x23					
+		add x3, x3, x13			// x_mid + x
+	mov x4, x24
+		add x4, x4, x14			// y_mid + y
+	bl paint_pixel
+
+	mov x3, x23
+		add x3, x3, x14      // x_mid + y
+	mov x4, x24
+		add x4, x4, x13      // y_mid + x				
+	bl paint_pixel
+
+	mov x3, x23
+		sub x3, x3, x14    // x_mid - y
+	mov x4, x24
+		add x4, x4, x13    // y_mid + x
+	bl paint_pixel
+
+	mov x3, x23
+		sub x3, x3, x13   // x_mid - x
+	mov x4, x24
+		add x4, x4, x14   // y_mid + y
+	bl paint_pixel
+
+	mov x3, x23
+		sub x3, x3, x13  // x_mid - x
+	mov x4, x24
+		sub x4, x4, x14  // y_mid - y
+	bl paint_pixel
+
+	mov x3, x23
+		sub x3, x3, x14  // x_mid - y
+	mov x4, x24
+		sub x4, x4, x13  // y_mid - x
+	bl paint_pixel
+
+	mov x3, x23
+		add x3, x3, x14  // x_mid + y
+	mov x4, x24
+		sub x4, x4, x13  // y_mid - x
+	bl paint_pixel
+
+	mov x3, x23
+		add x3, x3, x13		// x_mid + x
+	mov x4, x24
+		sub x4, x4, x14  // y_mid - y
+	bl paint_pixel
+
+
+// if x15 < 0....
+		add x16, x13, x13  // x16 = (2 * x)
+		add x15, x15, x16  // x15 = error + (2 * x)
+	add x15, x15, 1   // x15 = error + (2 * x) + 1
+
+// else ...
+	sub x14, x14, 1  // y = y-1
+		add x16, x13, x13	//x16 = (2 * x)
+		add x17, x14, x14  // x17 = (2 * y)
+		add x15, x15, x16  // x15 = error + (2 * x)
+		sub x15, x15, x17	// x15 = error + (2 * x) - (2 * 16)
+		add x15, x15, 1		//x15 = error + (2 * x) - (2 * 16) + 1
+
+//... fuera de las guardas
+
+	add x13, x13, 1
+//checkear x<y y volver a circunference loop
+
+ldr x30, [sp, 0]
+add sp, sp, 8
+ret
+
+
+circle:
+//parametros x3= coordenada x del centro, x4 = coordenada y del centro,  x5 = radio, w10 = color
+	circleloop:
+		bl circunference
+		sub x5, x5, 1
+		cbnz x5, circleloop					//basicamente vamos haciendo circunferencias de radio n a 1 hasta rellenar
+ret
