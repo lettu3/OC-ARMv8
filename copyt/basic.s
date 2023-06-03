@@ -136,7 +136,9 @@ stur X30, [SP, 0]
 
 mov x23, x3
 mov x24, x4
-
+	
+	movz x10, 0xad, lsl 16
+	movk x10, 0x9b80, lsl 00
 	mov x3, x23
 	mov x4, x24
 bl triangle1
@@ -152,10 +154,9 @@ add SP, SP, 8
 ret
 //--FIN DE LA PIRAMIDE--//
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //--INICIO CIRCUNFERENCIA--//
-//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//COMPLETAR//
 circunference:
 //parametros: x3 = coordenada x del centro, x4 = coordenada y del centro, x5 = radio,  w10 = color
 sub sp, sp, 8
@@ -220,10 +221,8 @@ circunference_loop:  //while ....
 
 
 // if x15 < 0....
-		add x16, x13, x13  // x16 = (2 * x)
-		add x15, x15, x16  // x15 = error + (2 * x)
-	add x15, x15, 1   // x15 = error + (2 * x) + 1
-
+	cmp x15, xzr
+	b.lt true
 // else ...
 	sub x14, x14, 1  // y = y-1
 		add x16, x13, x13	//x16 = (2 * x)
@@ -231,21 +230,37 @@ circunference_loop:  //while ....
 		add x15, x15, x16  // x15 = error + (2 * x)
 		sub x15, x15, x17	// x15 = error + (2 * x) - (2 * 16)
 		add x15, x15, 1		//x15 = error + (2 * x) - (2 * 16) + 1
+	b end
 
-//... fuera de las guardas
 
-	add x13, x13, 1
+true: add x16, x13, x13  // x16 = (2 * x)
+	add x15, x15, x16  // x15 = error + (2 * x)
+	add x15, x15, 1   // x15 = error + (2 * x) + 1
+	//... fuera de las guardas
+
+end:add x13, x13, 1
 //checkear x<y y volver a circunference loop
-
+	subs x9, x13, x14
+	b.lt circunference_loop
 ldr x30, [sp, 0]
 add sp, sp, 8
-ret
+ret	
+
+
 
 
 circle:
 //parametros x3= coordenada x del centro, x4 = coordenada y del centro,  x5 = radio, w10 = color
+sub sp, sp, 8
+stur x30, [sp, 0]
+mov x23, x3
+mov x24, x4
 	circleloop:
 		bl circunference
+		mov x3, x23
+		mov x4, x24
 		sub x5, x5, 1
 		cbnz x5, circleloop					//basicamente vamos haciendo circunferencias de radio n a 1 hasta rellenar
+ldr x30, [sp, 0]
+add sp, sp, 8
 ret

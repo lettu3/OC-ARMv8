@@ -26,8 +26,17 @@ main:
 	bl astro
 
 		
-		movz x10, 0xad, lsl 16
-		movk x10, 0x9b80, lsl 00
+
+
+		mov x1, 100
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			add x3, x3, 120
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+			add x4, x4, 20
+	bl pyramid
+
 		mov x1, 120
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
