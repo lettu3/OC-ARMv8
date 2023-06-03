@@ -207,17 +207,28 @@ astro:
 sub sp, sp, 8
 stur x30, [sp, 0]
 
-mov x1, 50
-mov x2, 60
 mov x3, SCREEN_WIDTH
+    lsr x9, x3, 2
     lsr x3, x3, 1
-    mov x9, x3
-    lsr x9, x9, 1
-    add x3, x3,x9
+    add x3, x3, x9
+
+mov x4, SCREEN_WIDTH
+    lsr x4, x4, 3
+mov x5, 30
+bl circle
+
+
+mov x1, 40
+mov x2, 40
+mov x3, SCREEN_WIDTH
+    lsr x9, x3, 2
+    lsr x3, x3, 1
+    add x3, x3, x9
+    sub x3, x3, 20
 mov x4, SCREEN_HEIGH
     lsr x4, x4, 3
-
 bl rectangle
+
 
 ldr x30, [sp, 0]
 add sp, sp, 8
