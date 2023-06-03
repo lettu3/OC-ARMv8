@@ -15,7 +15,7 @@ main:
 
 
     	movz x10, 0x75, lsl 16
-		movk x10, 0xaadb, lsl 00 //color del fondo
+		movk x10, 0xaadb, lsl 00
 	bl background
 	
 
@@ -25,15 +25,15 @@ main:
 		movk x10, 0xe87c, lsl 00
 	bl astro
 
-
-		movz x10, 0x73, lsl 16
-		movk x10, 0x4222, lsl 00
+		
+		movz x10, 0xad, lsl 16
+		movk x10, 0x9b80, lsl 00
 		mov x1, 120
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
 		mov x4, SCREEN_HEIGH
 			lsr x4, x4, 1
-	bl triangle
+	bl pyramid
 
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
@@ -66,7 +66,7 @@ userInput:
 	// - Al hacer OR "setea" el bit 2 en 1
 	// - Al hacer AND con el complemento "limpia" el bit 2 (setea el bit 2 en 0)
 	and w11, w10, 0b00000010
-	cbnz w11, InfLoop
+	cbnz w11, night
 
 	// si w11 es 0 entonces el GPIO 1 estaba liberado
 	// de lo contrario será distinto de 0, (en este caso particular 2)
@@ -74,9 +74,40 @@ userInput:
 
 	//---------------------------------------------------------------
 	// Infinite Loop
+	b userInput
+
+night:
+	    movz x10, 0x29, lsl 16
+		movk x10, 0x2936, lsl 00 //color del fondo
+	bl background
+	
+
+	bl floor
+	
+		movz x10, 0xd5, lsl 16
+		movk x10, 0xd5ca, lsl 00
+	bl astro
+
+		
+		movz x10, 0xad, lsl 16
+		movk x10, 0x9b80, lsl 00
+		mov x1, 120
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+	bl pyramid
+
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			add x3, x3, 150
+	bl cactus
+
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			sub x3, x3, 200
+	bl dinosaurio
 
 
-InfLoop:
-	b InfLoop
 
 

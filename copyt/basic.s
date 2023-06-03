@@ -67,8 +67,8 @@ ret
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//--INICIO DEL TRIANGULO--//
-triangle:
+//--INICIO DEL TRIANGULO1--//
+triangle1:
 //parametros: x1 = TAmaño del triangulo, x3 y x4 = coordenadas (x, y) del vertice superior del triangulo
 //            w10 = color del triangulo
 sub SP, SP, 8 						
@@ -76,25 +76,81 @@ stur X30, [SP, 0]
 
 	mov x9, x1
 	mov x13, x3
-	triangleLoop:
+	triangleLoop1:
 		mov x3, x13				//guardo en x13 la coordenada x del primer pixel de la fila
 		mov x11, x1
 			add x11, x11, 1
 		sub x11, x11, x9
 
-		printTriangle:
+		printTriangle1:
 			bl paint_pixel
 			add x3, x3, 1			//sumo 1 a la coord x
 			sub x11, x11, 1			//resto el contador de largo de fila
-			cbnz x11, printTriangle // si no llegue al final de la fila, pinto otro pixel
+			cbnz x11, printTriangle1 // si no llegue al final de la fila, pinto otro pixel
 			sub x13, x13, 1         // le resto 1 a la coordenada x del primer pixel de la fila almacenada en x13
 			add x4, x4, 1			//sumo 1 a la coord y
 			sub x9, x9, 1           //resto el contador de altura
-			cbnz x9, triangleLoop // si no llegue a la ultima fila, repito
+			cbnz x9, triangleLoop1 // si no llegue a la ultima fila, repito
 ldr X30, [SP, 0]					 			
 add SP, SP, 8	
 ret
-//--FIN DEL TRIANGULO--//
+//--FIN DEL TRIANGULO1--//
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO DEL TRIANGULO2--//
+triangle2:
+//parametros: x1 = TAmaño del triangulo, x3 y x4 = coordenadas (x, y) del vertice superior del triangulo
+//            w10 = color del triangulo
+sub SP, SP, 8 						
+stur X30, [SP, 0]
+
+	mov x9, x1
+	mov x13, x3
+	triangleLoop2:
+		mov x3, x13				//guardo en x13 la coordenada x del primer pixel de la fila
+		mov x11, x1
+			add x11, x11, 1
+		sub x11, x11, x9
+
+		printTriangle2:
+			bl paint_pixel
+			add x3, x3, 1			//sumo 1 a la coord x
+			sub x11, x11, 1			//resto el contador de largo de fila
+			cbnz x11, printTriangle2 // si no llegue al final de la fila, pinto otro pixel
+			add x4, x4, 1			//sumo 1 a la coord y
+			sub x9, x9, 1           //resto el contador de altura
+			cbnz x9, triangleLoop2 // si no llegue a la ultima fila, repito
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+//--FIN DEL TRIANGULO2--//
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO DE LA PIRAMIDE--//
+pyramid:
+//parametros x1 = alto de la piramide, x3= coordenada x de la punta, x4= coordenada y de la punta
+sub SP, SP, 8 						
+stur X30, [SP, 0]
+
+mov x23, x3
+mov x24, x4
+
+	mov x3, x23
+	mov x4, x24
+bl triangle1
+
+	movz x10, 0x92, lsl 16
+	movk x10, 0x7e5e, lsl 00
+	mov x3, x23
+	mov x4, x24
+bl triangle2
+
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+//--FIN DE LA PIRAMIDE--//
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
