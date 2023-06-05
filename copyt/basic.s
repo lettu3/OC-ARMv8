@@ -228,8 +228,8 @@ circunference_loop:  //while ....
 		add x16, x13, x13	//x16 = (2 * x)
 		add x17, x14, x14  // x17 = (2 * y)
 		add x15, x15, x16  // x15 = error + (2 * x)
-		sub x15, x15, x17	// x15 = error + (2 * x) - (2 * 16)
-		add x15, x15, 1		//x15 = error + (2 * x) - (2 * 16) + 1
+		sub x15, x15, x17	// x15 = error + (2 * x) - (2 * y)
+		add x15, x15, 1		//x15 = error + (2 * x) - (2 * y) + 1
 	b end
 
 
