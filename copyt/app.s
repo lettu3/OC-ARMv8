@@ -12,20 +12,18 @@
 main:
     // x0 contiene la direccion base del framebuffer
 	mov x20, x0 // Guarda la dirección base del framebuffer en x20
-    	movz x10, 0x75, lsl 16
+    	
+		movz x10, 0x75, lsl 16
 		movk x10, 0xaadb, lsl 00
 	bl background
 	
-	movz x10, 0xc6, lsl 16
-	movk x10, 0xa664, lsl 00   //color arena
+		movz x10, 0xc6, lsl 16
+		movk x10, 0xa664, lsl 00   //color arena
 	bl floor
 	
 		movz x10, 0xff, lsl 16
 		movk x10, 0xe87c, lsl 00
 	bl astro
-
-		
-
 
 		mov x1, 100
 		mov x3, SCREEN_WIDTH
@@ -52,7 +50,7 @@ main:
 
 			mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
-			sub x3, x3, 200
+			sub x3, x3, 300
 			movz x10, 0x93, lsl 16
 			movk x10, 0x3f94, lsl 00
 	bl dinosaurio
@@ -205,6 +203,56 @@ night:
 			 // color del cactus en w10
 	bl dinosaurioNoc
 	b InfLoop
+
+
+
+day_game:
+	add x19, x19, 1   //offset para ir moviendo las cosas en x19
+
+		movz x10, 0x75, lsl 16
+		movk x10, 0xaadb, lsl 00
+	bl background
+	
+		movz x10, 0xc6, lsl 16
+		movk x10, 0xa664, lsl 00   //color arena
+	bl floor
+	
+		movz x10, 0xff, lsl 16
+		movk x10, 0xe87c, lsl 00
+	bl astro
+
+		mov x1, 100
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			add x3, x3, 120
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+			add x4, x4, 20
+	bl pyramid
+
+		mov x1, 120
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			sub x3, x3, x19 //resto el offset, el objeto se mueve hacia la izquierda
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+	bl pyramid
+
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			add x3, x3, 150
+			sub x3, x3, x19 //resto el offset, el objeto se mueve hacia la izquierda
+			movz x10, 0x27, lsl 16
+			movk x10, 0x4739, lsl 00 // color del cactus en w10
+	bl cactus
+
+			mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
+			sub x3, x3, 200
+			movz x10, 0x93, lsl 16
+			movk x10, 0x3f94, lsl 00
+	bl dinosaurio
+
 /*Lo siguiente es un intento de hacer brillar al dinosaurio dibujando un circulo en el piso abajo de él
 Deberia ser del mismo celeste pero mas oscuro para dar la ilusión de que alumbra el piso*/
 

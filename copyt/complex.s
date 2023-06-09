@@ -31,6 +31,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x2, 15
 
         mov x3, x23
+        mov x4, x24
         add x4, x4, 25
     // 30 x 15  (X, Y+25)
     bl rectangle
@@ -39,7 +40,8 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x2, 10
 
         mov x3, x23
-        add x4, x4, 5
+        mov x4, x24
+        add x4, x4, 30
     // 40 x 5 (X, Y+35)
     bl rectangle
     
@@ -74,7 +76,8 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
 
         mov x3, x23
             add x3, x3, 25
-        add x4, x4, 20
+        mov x4, x24
+            add x4, x4, 60
     // 18 x 10  (X+25, Y+60)
     bl rectangle
     //fin torso del dino
@@ -92,7 +95,8 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
 
             mov x1, 25
             mov x2, 30
-
+            mov x3,x23
+                sub x3, x3, 50
             mov x4, x24
                 add x4, x4, 80
         // 25 x 30 (X-50, Y+180)
@@ -102,12 +106,15 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
             mov x2, 20
 
             mov x3, x23
-            add x4, x4, 50
-        //10 x 20 (X, Y+230)
+            mov x4, x24
+                add x4, x4, 130
+        //10 x 20 (X, Y+130)
         bl rectangle
-
-            sub x3, x3, 20
-        // 10 x 20  (X-20, Y+230)
+            mov x3, x23
+                sub x3, x3, 20
+            mov x4, x24
+                add x4, x4, 130
+        // 10 x 20  (X-20, Y+130)
         bl rectangle
 
 
@@ -150,14 +157,17 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x2, 15
 
         mov x3, x23
+        mov x4, x24
         add x4, x4, 25
     // 30 x 15  (X, Y+25)
     bl rectangle
 
         mov x1, 40
         mov x2, 10
+
         mov x3, x23
-        add x4, x4, 5
+        mov x4, x24
+        add x4, x4, 30
     // 40 x 5 (X, Y+35)
     bl rectangle
     
@@ -179,7 +189,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
     //\\\\\\\\\\\\\\\\\\\\\
     //TORSO DEL DINO
 
-        mov x1, 25
+                mov x1, 25
         mov x2, 80
 
         mov x3, x23
@@ -192,7 +202,8 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
 
         mov x3, x23
             add x3, x3, 25
-        add x4, x4, 20
+        mov x4, x24
+            add x4, x4, 60
     // 18 x 10  (X+25, Y+60)
     bl rectangle
     //fin torso del dino
@@ -210,7 +221,8 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
 
             mov x1, 25
             mov x2, 30
-
+            mov x3,x23
+                sub x3, x3, 50
             mov x4, x24
                 add x4, x4, 80
         // 25 x 30 (X-50, Y+180)
@@ -220,12 +232,15 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
             mov x2, 20
 
             mov x3, x23
-            add x4, x4, 50
-        //10 x 20 (X, Y+230)
+            mov x4, x24
+                add x4, x4, 130
+        //10 x 20 (X, Y+130)
         bl rectangle
-
-            sub x3, x3, 20
-        // 10 x 20  (X-20, Y+230)
+            mov x3, x23
+                sub x3, x3, 20
+            mov x4, x24
+                add x4, x4, 130
+        // 10 x 20  (X-20, Y+130)
         bl rectangle
 
 
@@ -283,7 +298,8 @@ mov x24, x4 // la guardo en x24 para restaurarla cuando lo necesite
 
     mov x3, x23
         add x3, x3, 10
-    add x4, x4, 20
+    mov x4, x24
+    add x4, x4, 40
     // 10x10 (X, Y+40)
     bl rectangle
     //fin brazo izquierdo//
@@ -296,12 +312,13 @@ mov x24, x4 // la guardo en x24 para restaurarla cuando lo necesite
         add x3, x3, 40
     mov x4, x24
         add x4, x4, 50
-    // 10x10 (X+40, Y+40)
+    // 10x10 (X+40, Y+50)
     bl rectangle
 
     mov x1, 10
     mov x2, 50
-
+    mov x3, x23
+        add x3, x3, 40
     add x3, x3, 10
     mov x4, x24
         add x4, x4, 10
