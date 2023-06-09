@@ -153,7 +153,31 @@ ldr X30, [SP, 0]
 add SP, SP, 8	
 ret
 //--FIN DE LA PIRAMIDE--//
+//--PIRAMIDE NOCTURNA--//
+pyramidNoc:
+//parametros x1 = alto de la piramide, x3= coordenada x de la punta, x4= coordenada y de la punta
+sub SP, SP, 8 						
+stur X30, [SP, 0]
 
+mov x23, x3
+mov x24, x4
+	
+	movz x10, 0x00, lsl 16
+	movk x10, 0x0011, lsl 00
+	mov x3, x23
+	mov x4, x24
+bl triangle1
+
+	movz x10, 0x00, lsl 16
+	movk x10, 0x0033, lsl 00
+	mov x3, x23
+	mov x4, x24
+bl triangle2
+
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+//--FIN DE LA PIRAMIDE NOCTURNA--//
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //--INICIO CIRCUNFERENCIA--//
