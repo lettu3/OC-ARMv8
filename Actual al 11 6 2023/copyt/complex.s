@@ -31,6 +31,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x2, 15
 
         mov x3, x23
+        mov x4, x24
         add x4, x4, 25
     // 30 x 15  (X, Y+25)
     bl rectangle
@@ -39,7 +40,8 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x2, 10
 
         mov x3, x23
-        add x4, x4, 5
+        mov x4, x24
+        add x4, x4, 30
     // 40 x 5 (X, Y+35)
     bl rectangle
     
@@ -74,7 +76,8 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
 
         mov x3, x23
             add x3, x3, 25
-        add x4, x4, 20
+        mov x4, x24
+            add x4, x4, 60
     // 18 x 10  (X+25, Y+60)
     bl rectangle
     //fin torso del dino
@@ -92,7 +95,8 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
 
             mov x1, 25
             mov x2, 30
-
+            mov x3,x23
+                sub x3, x3, 50
             mov x4, x24
                 add x4, x4, 80
         // 25 x 30 (X-50, Y+180)
@@ -102,12 +106,15 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
             mov x2, 20
 
             mov x3, x23
-            add x4, x4, 50
-        //10 x 20 (X, Y+230)
+            mov x4, x24
+                add x4, x4, 130
+        //10 x 20 (X, Y+130)
         bl rectangle
-
-            sub x3, x3, 20
-        // 10 x 20  (X-20, Y+230)
+            mov x3, x23
+                sub x3, x3, 20
+            mov x4, x24
+                add x4, x4, 130
+        // 10 x 20  (X-20, Y+130)
         bl rectangle
 
 
@@ -123,7 +130,130 @@ ret
 //--FIN DEL DINOSAURIO--//
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//--DINOSAURIO NOCTURNO--//
+dinosaurioNoc:
+sub sp, sp, 8
+stur x30, [sp, 0]
 
+movz x10, 0x00, lsl 16
+movk x10, 0xFFFF, lsl 00
+mov x23, x3  //me guardo x3 en x23 para recuperarlo cuando lo necesite
+
+mov x4, SCREEN_HEIGH
+    lsr x4, x4, 1
+    sub x4, x4, 20      //coordenada base Y = 220
+mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
+    //\\\\\\\\\\\\\\\\\\\
+    //Cabeza del dino//
+        mov x1, 50
+        mov x2, 25
+    
+        mov x3, x23
+        mov x4, x24
+    // 50 x 25 (X, Y)
+    bl rectangle
+
+        mov x1, 30
+        mov x2, 15
+
+        mov x3, x23
+        mov x4, x24
+        add x4, x4, 25
+    // 30 x 15  (X, Y+25)
+    bl rectangle
+
+        mov x1, 40
+        mov x2, 10
+
+        mov x3, x23
+        mov x4, x24
+        add x4, x4, 30
+    // 40 x 5 (X, Y+35)
+    bl rectangle
+    
+    movz x10, 0xff, lsl 16
+    movk x10, 0xffff, lsl 00 
+        mov x1, 5
+        mov x2, 5
+
+        mov x3, x23
+            add x3, x3, 10
+        mov x4, x24
+            add x4, x4, 5
+    // ojo : 5x5 (X+10, Y+5)
+    bl rectangle
+    //Fin cabeza del dino//
+    //\\\\\\\\\\\\\\\\\\\\\
+            movz x10, 0x00, lsl 16
+			movk x10, 0xFFFF, lsl 00
+    //\\\\\\\\\\\\\\\\\\\\\
+    //TORSO DEL DINO
+
+                mov x1, 25
+        mov x2, 80
+
+        mov x3, x23
+        mov x4, x24
+            add x4, x4, 40
+    // 25 x 80 (X, Y+40)
+    bl rectangle
+        mov x1, 18
+        mov x2, 10
+
+        mov x3, x23
+            add x3, x3, 25
+        mov x4, x24
+            add x4, x4, 60
+    // 18 x 10  (X+25, Y+60)
+    bl rectangle
+    //fin torso del dino
+    //\\\\\\\\\\\\\\\\\\\\\
+    //cola y patas del dino
+        mov x1,70
+        mov x2,30
+        
+        mov x3,x23
+            sub x3, x3, 50
+        mov x4, x24
+            add x4, x4, 100
+        // 70 x 30  (X-50, Y+100)
+        bl rectangle
+
+            mov x1, 25
+            mov x2, 30
+            mov x3,x23
+                sub x3, x3, 50
+            mov x4, x24
+                add x4, x4, 80
+        // 25 x 30 (X-50, Y+180)
+        bl rectangle
+
+            mov x1, 10
+            mov x2, 20
+
+            mov x3, x23
+            mov x4, x24
+                add x4, x4, 130
+        //10 x 20 (X, Y+130)
+        bl rectangle
+            mov x3, x23
+                sub x3, x3, 20
+            mov x4, x24
+                add x4, x4, 130
+        // 10 x 20  (X-20, Y+130)
+        bl rectangle
+
+
+
+
+        movz x10, 0x00, lsl 16
+        movk x10, 0xFFFF, lsl 00 // color del dino en w10
+
+
+ldr x30, [sp, 0]
+add sp, sp, 8
+ret
+//--FIN DEL DINOSAURIO NOCTURNO--//
 //--INICIO DEL CACTUS--//
 cactus:
 //parametros: x3= coordenada x donde se empieza a pintar el cactus, la coordenada y es estatica
@@ -139,8 +269,7 @@ mov x4, SCREEN_HEIGH
 mov x24, x4 // la guardo en x24 para restaurarla cuando lo necesite
 
 
-movz x10, 0x27, lsl 16
-movk x10, 0x4739, lsl 00 // color del cactus en w10
+
     //\\\\\\\\\\\\\\\\\\\
     //tronco del cactus//
     mov x1, 20
@@ -169,7 +298,8 @@ movk x10, 0x4739, lsl 00 // color del cactus en w10
 
     mov x3, x23
         add x3, x3, 10
-    add x4, x4, 20
+    mov x4, x24
+    add x4, x4, 40
     // 10x10 (X, Y+40)
     bl rectangle
     //fin brazo izquierdo//
@@ -182,12 +312,13 @@ movk x10, 0x4739, lsl 00 // color del cactus en w10
         add x3, x3, 40
     mov x4, x24
         add x4, x4, 50
-    // 10x10 (X+40, Y+40)
+    // 10x10 (X+40, Y+50)
     bl rectangle
 
     mov x1, 10
     mov x2, 50
-
+    mov x3, x23
+        add x3, x3, 40
     add x3, x3, 10
     mov x4, x24
         add x4, x4, 10
@@ -243,8 +374,7 @@ floor:
 sub sp, sp, 8
 stur x30, [sp, 0]
 
-	movz x10, 0xc6, lsl 16
-	movk x10, 0xa664, lsl 00   //color arena
+	
 
     mov x1, SCREEN_WIDTH
     mov x2, 120
@@ -271,7 +401,6 @@ background:
 //parametros: w10 = color del fondo
     sub sp, sp, 8
     stur x30, [sp, 0]
-
     mov x1, SCREEN_WIDTH     //todo el ancho de la pantalla
     mov x2, SCREEN_HEIGH    //toda la altura de la pantalla
     mov x3, 0               
