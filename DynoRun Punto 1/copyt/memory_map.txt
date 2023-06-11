@@ -12,57 +12,57 @@ LOAD complex.o
 LOAD start.o
                 0x0000000000080000                . = 0x80000
 
-.text           0x0000000000080000    0x911d0
+.text           0x0000000000080000    0x91250
  *(.text.boot)
  .text.boot     0x0000000000080000    0x100c8 start.o
                 0x0000000000080000                _start
  *(.text*)
- .text          0x00000000000900c8      0x7d0 app.o
+ .text          0x00000000000900c8      0x850 app.o
                 0x0000000000090730                main
- .text          0x0000000000090898      0x2d0 basic.o
- .text          0x0000000000090b68      0x668 complex.o
- .text          0x00000000000911d0    0x80000 start.o
+ .text          0x0000000000090918      0x2d0 basic.o
+ .text          0x0000000000090be8      0x668 complex.o
+ .text          0x0000000000091250    0x80000 start.o
 
-.iplt           0x00000000001111d0        0x0
- .iplt          0x00000000001111d0        0x0 start.o
+.iplt           0x0000000000111250        0x0
+ .iplt          0x0000000000111250        0x0 start.o
 
-.rela.dyn       0x00000000001111d0        0x0
- .rela.iplt     0x00000000001111d0        0x0 start.o
+.rela.dyn       0x0000000000111250        0x0
+ .rela.iplt     0x0000000000111250        0x0 start.o
  .rela.text.boot
-                0x00000000001111d0        0x0 start.o
+                0x0000000000111250        0x0 start.o
 
-.data           0x00000000001111d0        0x0
- .data          0x00000000001111d0        0x0 app.o
- .data          0x00000000001111d0        0x0 basic.o
- .data          0x00000000001111d0        0x0 complex.o
- .data          0x00000000001111d0        0x0 start.o
+.data           0x0000000000111250        0x0
+ .data          0x0000000000111250        0x0 app.o
+ .data          0x0000000000111250        0x0 basic.o
+ .data          0x0000000000111250        0x0 complex.o
+ .data          0x0000000000111250        0x0 start.o
 
-.igot.plt       0x00000000001111d0        0x0
- .igot.plt      0x00000000001111d0        0x0 start.o
+.igot.plt       0x0000000000111250        0x0
+ .igot.plt      0x0000000000111250        0x0 start.o
 
-.bss            0x00000000001111d0        0x0
+.bss            0x0000000000111250        0x0
  *(.bss*)
- .bss           0x00000000001111d0        0x0 app.o
- .bss           0x00000000001111d0        0x0 basic.o
- .bss           0x00000000001111d0        0x0 complex.o
- .bss           0x00000000001111d0        0x0 start.o
+ .bss           0x0000000000111250        0x0 app.o
+ .bss           0x0000000000111250        0x0 basic.o
+ .bss           0x0000000000111250        0x0 complex.o
+ .bss           0x0000000000111250        0x0 start.o
 
-.bss            0x00000000001111d0        0x0
-                0x00000000001111d0                . = ALIGN (0x10)
-                0x00000000001111d0                __bss_start = .
+.bss            0x0000000000111250        0x0
+                0x0000000000111250                . = ALIGN (0x10)
+                0x0000000000111250                __bss_start = .
  *(.bss .bss.*)
  *(COMMON)
-                0x00000000001111d0                __bss_end = .
-                0x00000000001111d0                _end = .
+                0x0000000000111250                __bss_end = .
+                0x0000000000111250                _end = .
                 0x0000000000000000                __bss_size = ((__bss_end - __bss_start) >> 0x3)
 OUTPUT(kernel8.elf elf64-littleaarch64)
 LOAD linker stubs
 
-.debug_line     0x0000000000000000      0x58d
- .debug_line    0x0000000000000000      0x256 app.o
- .debug_line    0x0000000000000256       0xf6 basic.o
- .debug_line    0x000000000000034c      0x1ee complex.o
- .debug_line    0x000000000000053a       0x53 start.o
+.debug_line     0x0000000000000000      0x5af
+ .debug_line    0x0000000000000000      0x278 app.o
+ .debug_line    0x0000000000000278       0xf6 basic.o
+ .debug_line    0x000000000000036e      0x1ee complex.o
+ .debug_line    0x000000000000055c       0x53 start.o
 
 .debug_info     0x0000000000000000       0xb8
  .debug_info    0x0000000000000000       0x2e app.o
@@ -86,9 +86,9 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000090       0x30 start.o
 
-.debug_str      0x0000000000000000       0x53
- .debug_str     0x0000000000000000       0x4b app.o
- .debug_str     0x000000000000004b       0x4b basic.o
- .debug_str     0x000000000000004b       0x4b complex.o
- .debug_str     0x000000000000004b        0x8 start.o
-                                         0x4b (size before relaxing)
+.debug_str      0x0000000000000000       0x55
+ .debug_str     0x0000000000000000       0x4d app.o
+ .debug_str     0x000000000000004d       0x4d basic.o
+ .debug_str     0x000000000000004d       0x4d complex.o
+ .debug_str     0x000000000000004d        0x8 start.o
+                                         0x4d (size before relaxing)

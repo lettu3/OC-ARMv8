@@ -56,8 +56,8 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
     bl rectangle
     //Fin cabeza del dino//
     //\\\\\\\\\\\\\\\\\\\\\
-movz x10, 0x93, lsl 16
-movk x10, 0x3f94, lsl 00 // color del dino en w10
+    movz x10, 0x93, lsl 16
+    movk x10, 0x3f94, lsl 00 // color del dino en w10
     //\\\\\\\\\\\\\\\\\\\\\
     //TORSO DEL DINO
 
