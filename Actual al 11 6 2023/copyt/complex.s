@@ -175,7 +175,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
             add x4, x4, 5
     // ojo : 5x5 (X+10, Y+5)
-    bl rectangle
+    bl rectangle_cond
     //Fin cabeza del dino//
     //\\\\\\\\\\\\\\\\\\\\\
             movz x10, 0x00, lsl 16
