@@ -13,9 +13,6 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
 
 mov x23, x3  //me guardo x3 en x23 para recuperarlo cuando lo necesite
 
-mov x4, SCREEN_HEIGH
-    lsr x4, x4, 1
-    sub x4, x4, 20      //coordenada base Y = 220
 mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
     //\\\\\\\\\\\\\\\\\\\
     //Cabeza del dino//
@@ -139,9 +136,6 @@ movz x10, 0x00, lsl 16
 movk x10, 0xFFFF, lsl 00
 mov x23, x3  //me guardo x3 en x23 para recuperarlo cuando lo necesite
 
-mov x4, SCREEN_HEIGH
-    lsr x4, x4, 1
-    sub x4, x4, 20      //coordenada base Y = 220
 mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
     //\\\\\\\\\\\\\\\\\\\
     //Cabeza del dino//
