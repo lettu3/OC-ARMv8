@@ -22,7 +22,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x3, x23
         mov x4, x24
     // 50 x 25 (X, Y)
-    bl rectangle
+    bl rectangle_cond
 
         mov x1, 30
         mov x2, 15
@@ -31,7 +31,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
         add x4, x4, 25
     // 30 x 15  (X, Y+25)
-    bl rectangle
+    bl rectangle_cond
 
         mov x1, 40
         mov x2, 10
@@ -40,7 +40,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
         add x4, x4, 30
     // 40 x 5 (X, Y+35)
-    bl rectangle
+    bl rectangle_cond
     
     movz x10, 0xff, lsl 16
     movk x10, 0xffff, lsl 00 
@@ -67,7 +67,7 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
         mov x4, x24
             add x4, x4, 40
     // 25 x 80 (X, Y+40)
-    bl rectangle
+    bl rectangle_cond
         mov x1, 18
         mov x2, 10
 
@@ -76,7 +76,7 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
         mov x4, x24
             add x4, x4, 60
     // 18 x 10  (X+25, Y+60)
-    bl rectangle
+    bl rectangle_cond
     //fin torso del dino
     //\\\\\\\\\\\\\\\\\\\\\
     //cola y patas del dino
@@ -88,7 +88,7 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
         mov x4, x24
             add x4, x4, 100
         // 70 x 30  (X-50, Y+100)
-        bl rectangle
+        bl rectangle_cond
 
             mov x1, 25
             mov x2, 30
@@ -97,7 +97,7 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
             mov x4, x24
                 add x4, x4, 80
         // 25 x 30 (X-50, Y+180)
-        bl rectangle
+        bl rectangle_cond
 
             mov x1, 10
             mov x2, 20
@@ -106,13 +106,13 @@ movk x10, 0x3f94, lsl 00 // color del dino en w10
             mov x4, x24
                 add x4, x4, 130
         //10 x 20 (X, Y+130)
-        bl rectangle
+        bl rectangle_cond
             mov x3, x23
                 sub x3, x3, 20
             mov x4, x24
                 add x4, x4, 130
         // 10 x 20  (X-20, Y+130)
-        bl rectangle
+        bl rectangle_cond
 
 
 
@@ -145,7 +145,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x3, x23
         mov x4, x24
     // 50 x 25 (X, Y)
-    bl rectangle
+    bl rectangle_cond
 
         mov x1, 30
         mov x2, 15
@@ -154,7 +154,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
         add x4, x4, 25
     // 30 x 15  (X, Y+25)
-    bl rectangle
+    bl rectangle_cond
 
         mov x1, 40
         mov x2, 10
@@ -163,7 +163,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
         add x4, x4, 30
     // 40 x 5 (X, Y+35)
-    bl rectangle
+    bl rectangle_cond
     
     movz x10, 0xff, lsl 16
     movk x10, 0xffff, lsl 00 
@@ -190,7 +190,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
             add x4, x4, 40
     // 25 x 80 (X, Y+40)
-    bl rectangle
+    bl rectangle_cond
         mov x1, 18
         mov x2, 10
 
@@ -199,7 +199,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
             add x4, x4, 60
     // 18 x 10  (X+25, Y+60)
-    bl rectangle
+    bl rectangle_cond
     //fin torso del dino
     //\\\\\\\\\\\\\\\\\\\\\
     //cola y patas del dino
@@ -211,7 +211,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
         mov x4, x24
             add x4, x4, 100
         // 70 x 30  (X-50, Y+100)
-        bl rectangle
+        bl rectangle_cond
 
             mov x1, 25
             mov x2, 30
@@ -220,7 +220,7 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
             mov x4, x24
                 add x4, x4, 80
         // 25 x 30 (X-50, Y+180)
-        bl rectangle
+        bl rectangle_cond
 
             mov x1, 10
             mov x2, 20
@@ -229,13 +229,13 @@ mov x24, x4  //me guardo x4 en x24 para recupearlo cuando lo necesite
             mov x4, x24
                 add x4, x4, 130
         //10 x 20 (X, Y+130)
-        bl rectangle
+        bl rectangle_cond
             mov x3, x23
                 sub x3, x3, 20
             mov x4, x24
                 add x4, x4, 130
         // 10 x 20  (X-20, Y+130)
-        bl rectangle
+        bl rectangle_cond
 
 
 

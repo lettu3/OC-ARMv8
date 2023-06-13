@@ -1,4 +1,5 @@
 	.include "complex.s"
+	.include "actions.s"
 	.equ SCREEN_WIDTH,   640
 	.equ SCREEN_HEIGH,   480
 	.equ BITS_PER_PIXEL, 32
@@ -11,97 +12,6 @@
 
 
 ///
-jump:
-sub SP, SP, 8 						
-stur X30, [SP, 0]
-	cmp wzr, w11
-		b.lt setregister
-	b endverify
-
-	setregister:
-		mov x6, 1
-	endverify:
-
-ldr X30, [SP, 0]					 			
-add SP, SP, 8	
-ret
-
-status:
-sub SP, SP, 8 						
-stur X30, [SP, 0]
-	mov x9, 1
-	mov x10, 2
-
-	cmp x6, x9
-		b.eq jumping
-	cmp x6, x10
-		b.eq falling
-	
-	b endstatus
-
-	jumping:
-		add x7, x7, 2
-
-		cmp x7, 130
-			b.eq switch
-		b endstatus
-
-		switch:
-			mov x6, 2
-		b endstatus
-
-	falling:
-		sub x7, x7, 2
-
-		cmp x7, 0
-			b.eq finishjump
-		b endstatus
-
-		finishjump:
-			mov x6, 0
-
-	endstatus:
-ldr X30, [SP, 0]					 			
-add SP, SP, 8	
-ret
-
-
-///
-
-
-bajar_velocidad:
-sub SP, SP, 8 						
-stur X30, [SP, 0]
-
-	cmp wzr, w11
-		b.lt sub_speed
-	b end_down_speed
-
-	sub_speed:
-	ldr x12, =0xB00000
-
-	end_down_speed:
-
-	ldr X30, [SP, 0]					 			
-	add SP, SP, 8	
-ret
- 
-subir_velocidad:
-sub SP, SP, 8 						
-stur X30, [SP, 0]
-
-	cmp wzr, w11
-		b.lt add_speed
-	b end_up_speed	
-		
-	add_speed:	
-	ldr x12, =0x001000
-
-	end_up_speed:
-
-ldr X30, [SP, 0]					 			
-add SP, SP, 8
-ret
 
 main: 
     // x0 contiene la direccion base del framebuffer
@@ -110,11 +20,7 @@ main:
 		movz x10, 0x75, lsl 16
 		movk x10, 0xaadb, lsl 00
 	bl background
-	
-		movz x10, 0xc6, lsl 16
-		movk x10, 0xa664, lsl 00   //color arena
-	bl floor
-	
+		
 		movz x10, 0xff, lsl 16
 		movk x10, 0xe87c, lsl 00
 	bl astro
@@ -122,10 +28,19 @@ main:
 		mov x1, 100
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
+			add x3, x3, 210
+		mov x4, SCREEN_HEIGH
+			lsr x4, x4, 1
+			add x4, x4, 50
+	bl pyramid
+	
+		mov x1, 100
+		mov x3, SCREEN_WIDTH
+			lsr x3, x3, 1
 			add x3, x3, 120
 		mov x4, SCREEN_HEIGH
 			lsr x4, x4, 1
-			add x4, x4, 20
+			add x4, x4, 30
 	bl pyramid
 
 		mov x1, 120
@@ -133,7 +48,13 @@ main:
 			lsr x3, x3, 1
 		mov x4, SCREEN_HEIGH
 			lsr x4, x4, 1
+			add x4, x4, 10
+
 	bl pyramid
+
+		movz x10, 0xc6, lsl 16
+		movk x10, 0xa664, lsl 00   //color arena
+	bl floor
 
 		mov x3, SCREEN_WIDTH
 			lsr x3, x3, 1
@@ -150,6 +71,8 @@ main:
 			add x3, x3, 150
 			movz x10, 0x27, lsl 16
 			movk x10, 0x4739, lsl 00 // color del cactus en w10
+
+			mov w21, w10
 	bl cactus
 
 	mov x27, xzr
@@ -159,15 +82,6 @@ main:
 	mov x6, 0
 	mov x7, 0
 
-/*
-subir_velocidad:
-	ldr x12, = 0x400000
-	b InfLoop
-
-bajar_velocidad:
-	ldr x12, = 0xB00000
-	b InfLoop
- */
 
 InfLoop:
 	// Ejemplo de uso de gpios

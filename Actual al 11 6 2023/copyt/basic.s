@@ -1,6 +1,9 @@
 .equ SCREEN_WIDTH, 		640
-.equ SCREEN_HEIGH, 		480	
+.equ SCREEN_HEIGH, 		480
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO CHECK_RANGE--//
 checkRange:
 //params: x3 = x coord,  x4= y coord
 sub SP, SP, 8 						
@@ -46,7 +49,11 @@ stur X30, [SP, 0]
 ldr X30, [SP, 0]				 			
 add SP, SP, 8	
 ret
+//--FIN CHECK_RANGE--//
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO CALCULAR_PIXEL--//
 calcular_pixel: 
 //params: x3 = coord x, x4 = coord y, returns the pointer to the framebuffer in that coord in x0
 sub SP, SP, 8 						
@@ -63,7 +70,11 @@ stur X30, [SP, 0]
 ldr X30, [SP, 0]					 			
 add SP, SP, 8	
 ret
+//--FIN CALCULAR_PIXEL--//
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO PAINT_PIXEL--//
 paint_pixel:
 //parametros, x3 = x coord, x4 = y coord, w10 = colour;
 sub SP, SP, 8 						
@@ -75,9 +86,11 @@ stur X30, [SP, 0]
 ldr X30, [SP, 0]					 			
 add SP, SP, 8	
 ret
+//--FIN PAINT_PIXEL--//
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //--INICIO DEL RECTANGULO--//
-
 rectangle:
 //parametros: x1 = Width, x2 = Heigh, x3= initial x, x4 = initial y, w10 = color
 sub SP, SP, 8 						
@@ -102,6 +115,54 @@ ret
 
 //--FIN DEL RECTANGULO--//
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO DE PAINT_PIXEL_COND--//
+paint_pixel_cond:
+//parametros, x3 = x coord, x4 = y coord, w10 = colour;
+sub SP, SP, 8 						
+stur X30, [SP, 0]
+
+    bl calcular_pixel
+
+	ldur w14, [x0]   //guardo el color previo de ese pixel en w14
+
+	cmp w14, w21    //si ese pixel es del color que no quiero tocar...
+		b.eq endgame
+	//si no son iguales...
+	colour_pixel:
+    stur w10,[x0]  // Colorear el pixel N
+
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+//--FIN DE PAINT_PIXEL_COND--//
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO DE RECTANGLE_COND--//
+rectangle_cond:
+//parametros: x1 = Width, x2 = Heigh, x3= initial x, x4 = initial y, w10 = color
+sub SP, SP, 8 						
+stur X30, [SP, 0]
+
+    mov x13, x3     //me guardo en x13, la coordenada x inicial de cada fila
+    mov x9, x2      //contador de altura
+    rectangleLoop_cond:
+        mov x3, x13 //restauro la coordenada x
+        mov x11, x1 //contador de ancho
+        rectanglePaint_cond:
+            bl paint_pixel_cond //pinto el pixel
+            add x3, x3, 1   //avanzo al de la derecha
+            sub x11, x11, 1 //resto el contador de anchos
+            cbnz x11, rectanglePaint_cond //si no llegue al final, vuelvo a pintar
+            add x4, x4, 1      //bajo al pixel de abajo
+            sub x9, x9, 1    //resto el contador de altura
+            cbnz x9, rectangleLoop_cond  //si no llegue al final, vuelvo a empezar
+ldr X30, [SP, 0]					 			
+add SP, SP, 8	
+ret
+//--FIN DE RECTANGLE_COND--//
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //--INICIO DEL TRIANGULO1--//
@@ -190,6 +251,9 @@ ldr X30, [SP, 0]
 add SP, SP, 8	
 ret
 //--FIN DE LA PIRAMIDE--//
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //--PIRAMIDE NOCTURNA--//
 pyramidNoc:
 //parametros x1 = alto de la piramide, x3= coordenada x de la punta, x4= coordenada y de la punta
@@ -306,7 +370,11 @@ end:add x13, x13, 1
 ldr x30, [sp, 0]
 add sp, sp, 8
 ret	
+//--FIN DE LA CIRCUNFERENCIA--//
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--INICIO DEL CIRCULO--//
 circle:
 //parametros x3= coordenada x del centro, x4 = coordenada y del centro,  x5 = radio, w10 = color
 sub sp, sp, 8
@@ -322,3 +390,9 @@ mov x24, x4
 ldr x30, [sp, 0]
 add sp, sp, 8
 ret
+//--FIN DEL CIRCULO--//
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--ENDGAME--//
+endgame:
