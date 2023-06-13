@@ -240,6 +240,102 @@ night_game:
 		movk x10, 0x2936, lsl 00 //color del fondo
 	bl background
 	
+	mov x3, 30
+	mov x4, 30 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+	
+	mov x3, 70
+	mov x4, 50 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 100
+	mov x4, 200 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 421
+	mov x4, 250 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 570
+	mov x4, 280
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 500
+	mov x4, 20
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 200
+	mov x4, 300
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 350
+	mov x4, 100
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 600
+	mov x4, 150 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 550
+	mov x4, 105 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 320
+	mov x4, 220 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+
+	mov x3, 400
+	mov x4, 270 
+	mov x5, 2
+	movz x10, 0xFF, lsl 16
+	movk x10, 0xFFFF, lsl 00
+	bl circle
+	
+	mov x3, SCREEN_WIDTH
+    lsr x9, x3, 2
+    lsr x3, x3, 1
+    add x3, x3, x9
+
+	movz x10, 0x3B, lsl 16
+	movk x10, 0x3A47, lsl 00
+	mov x4, SCREEN_WIDTH
+    lsr x4, x4, 3
+	mov x5, 50
+	bl circle
+	
 		movz x10, 0xd5, lsl 16
 		movk x10, 0xd5ca, lsl 00
 	bl astro
